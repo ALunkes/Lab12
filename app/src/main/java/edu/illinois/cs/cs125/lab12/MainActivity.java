@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -68,13 +69,16 @@ public final class MainActivity extends AppCompatActivity {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,
                     "http://api.openweathermap.org/data/2.5/weather?zip=61820,us&appid="
-                            + BuildConfig.API_KEY,
+                            + "11672ea4ab1b009dd30f79a4020d85b7",
                     null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(final JSONObject response) {
                             try {
                                 Log.d(TAG, response.toString(2));
+                                String weather = response.getJSONArray("weather").getJSONObject(0).getString("main");
+                                TextView textView = findViewById(R.id.Response);
+                                textView.setText(weather);
                             } catch (JSONException ignored) { }
                         }
                     }, new Response.ErrorListener() {
